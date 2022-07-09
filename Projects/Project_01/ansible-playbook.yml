@@ -1,0 +1,22 @@
+---
+- name: "first ansible-playbook"
+  hosts: localhost
+  tasks:
+
+  - name: stop container
+    command: docker container stop ansiblr-con
+    ignore_errors: yes
+
+  - name: rm container
+    command: docker container rm ansiblr-con
+    ignore_errors: yes
+
+  - name: rm img
+    command: docker rmi ansibl-img
+    ignore_errors: yes
+
+  - name: build
+    command: docker build -t ansibl-img .
+
+  - name: run container
+    command: docker run -d  --name ansiblr-con -p 8888:80 ansibl-img
