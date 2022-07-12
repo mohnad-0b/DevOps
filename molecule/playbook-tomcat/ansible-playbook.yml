@@ -1,0 +1,29 @@
+---
+- name: "Tomcat on Ubuntu"
+  hosts: localhost
+  tasks:
+
+  - name:  create tomcat user
+    command: sudo useradd -m -d /opt/tomcat -U -s /bin/false tomcat
+
+  - name: update
+    command: sudo apt update
+
+  - name: install jdk
+    command: sudo apt install default-jdk -y
+
+  - name: install curl 
+    command: sudo apt-get install curl -y
+
+  - name: downlode apache-tomcat
+    command: sudo curl https://dlcdn.apache.org/tomcat/tomcat-10/v10.0.22/bin/apache-tomcat-10.0.22-deployer.tar.gz --output apache-tomcat-10.0.22-deployer.tar.gz
+
+  - name: makdir
+    command: sudo mkdir -p /opt/tomcat
+
+  - name: extract
+    command: sudo  tar xzvf apache-tomcat-10.0.22-deployer.tar.gz -C /opt/tomcat --strip-components=1
+
+  - name: permission
+    command: sudo chown -R tomcat:tomcat /opt/tomcat/ && chmod -R u+x /opt/tomcat/bin
+
