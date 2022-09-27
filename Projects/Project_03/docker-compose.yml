@@ -1,18 +1,46 @@
 version: '3'
 
 services:
+
   db:
     image: mysql
     restart: always
     environment:
+      MYSQL_DATABASE: 'myDB'
+      MYSQL_ROOT_PASSWORD: 'root'
+
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+
+  web_app:
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    volumes:
+      - ./app:/var/www/html
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+      - phpmyadmin
+
+  phpmyadmin:
+    depends_on:
+      - db
+
+    image: phpmyadmin/phpmyadmin
+    restart: always
+
+    environment:
+      PMA_HOST: db
+      PMA_ROOT_PASSWORD: root
+
       MYSQL_DATABASE: 'app'
-      MYSQL_PASSWORD: 'password'
-      MYSQL_USER: 'user'
       MYSQL_ROOT_PASSWORD: 'root'
 
     ports:
-      - '3333:3306'
+      - '3306:3306'
     volumes:
       - ./init:/docker-entrypoint-initdb.d
-volumes:
-  init:
