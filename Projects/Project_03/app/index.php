@@ -9,7 +9,7 @@
         $user = $_POST['user'];
         $pass = $_POST['pass'];
 
-        $con = mysqli_connect("localhost","root","root","app");
+        $con = mysqli_connect("db","root","root","myDB");
         $sql = "SELECT * FROM users WHERE username = '$user' AND `password` = '$pass'";
         $result = mysqli_query($con,$sql);
         $row = mysqli_num_rows($result);
