@@ -7,7 +7,7 @@
         $user = $_POST['user'];
         $pass = $_POST['pass'];
 
-        $con = mysqli_connect("localhost","root","","app");
+        $con = mysqli_connect("localhost","root","root","app");
         $sql = "INSERT INTO `users` (`username`, `password`) VALUES ('$user', '$pass')";
         $result = mysqli_query($con,$sql);
 
